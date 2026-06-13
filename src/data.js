@@ -37,6 +37,7 @@ export const CATEGORIES = [
   "Hortifruti",
   "Açougue",
   "Bebidas",
+  "Laticinios",
   "Mercearia",
   "Limpeza",
   "Padaria",

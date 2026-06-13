@@ -472,8 +472,10 @@ function PublicCatalog({ mode, promotions, session, storeSettings }) {
                 </a>
               </div>
             </div>
+          </div>
 
-            <div className="hero__search-card">
+          <div className="hero__search-card hero__search-card--footer">
+            <div className="hero__search-row">
               <div className="hero__card-header">
                 <div>
                   <span className="eyebrow">Busca rápida</span>
@@ -487,7 +489,7 @@ function PublicCatalog({ mode, promotions, session, storeSettings }) {
                 </span>
               </div>
 
-              <label className="field">
+              <label className="field hero__search-field">
                 <span className="field__label">Buscar promoção</span>
                 <input
                   type="search"
@@ -501,31 +503,30 @@ function PublicCatalog({ mode, promotions, session, storeSettings }) {
                   placeholder="Ex.: café, banana, detergente..."
                 />
               </label>
+            </div>
 
-              <div className="category-pills" aria-label="Categorias">
-                {CATEGORIES.map((option) => (
-                  <button
-                    key={option}
-                    type="button"
-                    className={`pill ${category === option ? "pill--active" : ""}`}
-                    onClick={() => {
-                      startTransition(() => {
-                        setCategory(option);
-                      });
-                    }}
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
+            <div className="category-pills" aria-label="Categorias">
+              {CATEGORIES.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  className={`pill ${category === option ? "pill--active" : ""}`}
+                  onClick={() => {
+                    startTransition(() => {
+                      setCategory(option);
+                    });
+                  }}
+                >
+                  {option}
+                </button>
+              ))}
+            </div>
 
-              <div className="hero__helper">
-                <span>Filtro atual: {category}</span>
-                <span>
-                  {normalizedQuery ? `Busca: "${deferredQuery}"` : "Use categorias para refinar"}
-                </span>
-              </div>
-
+            <div className="hero__helper">
+              <span>Filtro atual: {category}</span>
+              <span>
+                {normalizedQuery ? `Busca: "${deferredQuery}"` : "Use categorias para refinar"}
+              </span>
             </div>
           </div>
         </div>

@@ -279,10 +279,14 @@ textarea:disabled {
 
 .hero__content {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
-  gap: 28px;
+  grid-template-columns: 1fr;
+  gap: 20px;
   align-items: center;
   padding-top: 34px;
+}
+
+.hero__copy {
+  max-width: 760px;
 }
 
 .hero__copy h2 {
@@ -345,9 +349,22 @@ textarea:disabled {
   box-shadow: 0 18px 34px rgba(17, 12, 8, 0.16);
 }
 
+.hero__search-card--footer {
+  margin-top: 30px;
+  display: grid;
+  gap: 18px;
+}
+
+.hero__search-row {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1.15fr);
+  gap: 20px;
+  align-items: end;
+}
+
 .hero__card-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 14px;
 }
@@ -369,6 +386,14 @@ textarea:disabled {
   line-height: 1.5;
 }
 
+.hero__search-field {
+  gap: 10px;
+}
+
+.hero__search-field input {
+  min-height: 56px;
+}
+
 .hero__card-badge {
   flex-shrink: 0;
   padding: 9px 12px;
@@ -380,9 +405,10 @@ textarea:disabled {
 }
 
 .hero__helper {
-  margin-top: 14px;
+  margin-top: 2px;
   font-size: 0.92rem;
   color: var(--muted-foreground);
+  justify-content: flex-start;
 }
 
 .field,
@@ -923,7 +949,8 @@ textarea:disabled {
 
 @media (max-width: 1023px) {
   .hero__content,
-  .auth-page__grid {
+  .auth-page__grid,
+  .hero__search-row {
     grid-template-columns: 1fr;
   }
 
@@ -976,6 +1003,10 @@ textarea:disabled {
   .hero__card-header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .hero__helper {
+    margin-top: 0;
   }
 
   .admin-header__actions,
