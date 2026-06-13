@@ -413,7 +413,16 @@ function PublicCatalog({ mode, promotions, session, storeSettings }) {
 
     return matchesCategory && matchesQuery;
   });
+  const categoriesWithOffers = new Set(promotions.map((promotion) => promotion.category)).size;
+  const bestDeal = promotions.reduce((currentBest, promotion) => {
+    const discount = getDiscountPercentage(promotion.price, promotion.originalPrice) || 0;
 
+    if (!currentBest || discount > currentBest.discount) {
+      return { promotion, discount };
+    }
+
+    return currentBest;
+  }, null);
   return (
     <div className="public-page">
       <header className="hero">
@@ -436,19 +445,48 @@ function PublicCatalog({ mode, promotions, session, storeSettings }) {
 
           <div className="hero__content">
             <div className="hero__copy">
-              <h2>Promoções que chamam atenção e aceleram a compra.</h2>
+              <p className="hero__intro">Ofertas atualizadas para a sua compra render mais.</p>
+              <h2>Encontre promoções reais sem perder tempo procurando.</h2>
               <p>
-                Pesquise ofertas, filtre por categoria e fale direto com a loja
-                pelo WhatsApp em poucos toques.
+                Busque produtos, filtre por categoria e fale com a loja direto no
+                WhatsApp quando encontrar a melhor oportunidade.
               </p>
+
               <div className="hero__stats">
                 <span>{promotions.length} ofertas ativas</span>
-                <span>Contato direto com a loja</span>
-                <span>Atualização rápida pelo painel</span>
+                <span>{categoriesWithOffers} categorias</span>
+                <span>{bestDeal?.discount ? `Até ${bestDeal.discount}% OFF` : "Novas ofertas"}</span>
+              </div>
+
+              <div className="hero__actions">
+                <a className="button button--primary" href="#ofertas">
+                  Ver ofertas agora
+                </a>
+                <a
+                  className="button button--ghost hero__contact-button"
+                  href={`https://wa.me/${storeSettings.whatsappNumber}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Falar com a loja
+                </a>
               </div>
             </div>
 
             <div className="hero__search-card">
+              <div className="hero__card-header">
+                <div>
+                  <span className="eyebrow">Busca rápida</span>
+                  <h3>Encontre sua oferta em segundos</h3>
+                  <p className="hero__card-copy">
+                    Digite o produto ou escolha uma categoria para filtrar a vitrine.
+                  </p>
+                </div>
+                <span className="hero__card-badge">
+                  {isPending ? "Atualizando..." : `${visiblePromotions.length} resultado(s)`}
+                </span>
+              </div>
+
               <label className="field">
                 <span className="field__label">Buscar promoção</span>
                 <input
@@ -483,14 +521,17 @@ function PublicCatalog({ mode, promotions, session, storeSettings }) {
 
               <div className="hero__helper">
                 <span>Filtro atual: {category}</span>
-                <span>{isPending ? "Atualizando lista..." : `${visiblePromotions.length} resultado(s)`}</span>
+                <span>
+                  {normalizedQuery ? `Busca: "${deferredQuery}"` : "Use categorias para refinar"}
+                </span>
               </div>
+
             </div>
           </div>
         </div>
       </header>
 
-      <main className="catalog-section">
+      <main id="ofertas" className="catalog-section">
         <div className="container">
           {visiblePromotions.length > 0 ? (
             <div className="promotion-grid">
